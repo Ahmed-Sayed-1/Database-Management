@@ -11,10 +11,7 @@ do
 case $Choice in 
 
 CreateDatabase)
-    echo "Enter the name of the database"
-    read dbname
-    mkdir $dbname
-    echo "Database created successfully"
+    . ./createDatabase.sh
     ;;
 ListDatabases)
     ls -d */
