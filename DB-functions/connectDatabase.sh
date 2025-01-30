@@ -1,17 +1,16 @@
 #! /bin/bash
 
- read -p "Enter the name of the database" dbname
-    if [ -d ./DataBase/$dbname ]
-    then
-        echo "Database selected successfully"
+ show(){
         select TableChoice in CreateTable ListTables DropTable InsertIntoTable SelectFromTable DeleteFromTable UpdateTable Exit
         do
         case $TableChoice in        
         CreateTable)
-             . ../Table-functions/createTable.sh
+            . ./Table-functions/createTable.sh
+            show
             ;;
         ListTables)
             ls ./DataBase/$dbname
+            echo "lol"
             ;;
         DropTable)
             echo "Enter the name of the database"
@@ -65,6 +64,13 @@
             ;;
             esac
             done
+    }
+ read -p "Enter the name of the database" dbname
+    echo "Database selected successfully"
+    if [ -d ./DataBase/$dbname ]
+    then
+       show 
     else
         echo "Database does not exist"
     fi
+    
