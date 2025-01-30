@@ -1,7 +1,5 @@
 #! /bin/bash
 
-PS1="DBMS> "
-
 shopt -s extglob 
 
 DB-menu(){
@@ -16,7 +14,14 @@ CreateDatabase)
     DB-menu
     ;;
 ListDatabases)
-    ls -d */
+    count=$(ls DataBase | wc -l)
+    if [[ $count -eq 0 ]]
+    then
+        echo "No databases found"
+    else
+        echo "List of databases:"
+        ls DataBase
+    fi
     DB-menu
     ;;
 DropDatabase)
@@ -31,7 +36,7 @@ ConnectDB)
     DB-menu
     ;;
 Exit)
-    break
+    exit
     ;;
 *)
     echo "Unknown choice"

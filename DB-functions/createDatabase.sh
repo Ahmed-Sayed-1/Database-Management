@@ -1,5 +1,10 @@
 #! /bin/bash
 read -p "Enter the name of the database: " dbname
+	if [[ ! -e ./DataBase ]]
+		then 
+			mkdir ./DataBase
+	fi
+		
 	if [[ -e ./DataBase/$dbname ]]
 	then
 		echo Database is already exist

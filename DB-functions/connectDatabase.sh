@@ -1,8 +1,7 @@
 #! /bin/bash
 
  read -p "Enter the name of the database" dbname
-   cd ./DataBase
-    if [ -d $dbname ]
+    if [ -d ./DataBase/$dbname ]
     then
         echo "Database selected successfully"
         select TableChoice in CreateTable ListTables DropTable InsertIntoTable SelectFromTable DeleteFromTable UpdateTable Exit
@@ -12,9 +11,7 @@
              . ../Table-functions/createTable.sh
             ;;
         ListTables)
-            echo "Enter the name of the database"
-            read dbname
-            ls $dbname
+            ls ./DataBase/$dbname
             ;;
         DropTable)
             echo "Enter the name of the database"
@@ -64,7 +61,7 @@
             echo "Data updated successfully"
             ;;
         Exit)
-            break
+            exit
             ;;
             esac
             done
