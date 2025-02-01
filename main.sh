@@ -30,7 +30,7 @@ DB-menu(){
         clear
         echo "Enter the name of the database"
         read dbname
-        rm -r $dbname
+        rm -rfI DataBase/$dbname
         echo "Database deleted successfully"
         DB-menu
         ;;

@@ -1,5 +1,0 @@
-id:integer:pk
-name:string:
-active:boolean:
-address:string:
-date:integer:
