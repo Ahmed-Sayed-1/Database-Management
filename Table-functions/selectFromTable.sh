@@ -11,7 +11,6 @@ function select_records() {
     fi
 
     columns=($(awk -F: '{print $1}' "$metadata_file"))
-    data_types=($(awk -F: '{print $2}' "$metadata_file"))
 
     echo "Select columns (enter numbers separated by spaces, or * for all):"
     for i in "${!columns[@]}"; do
@@ -42,7 +41,9 @@ function select_records() {
     for i in "${selected_cols[@]}"; do
         printf "%-15s" "${columns[$i]}"
     done
-    echo -e "\n$(printf '%.0s-' {1..60})"
+    echo
+    printf '%.0s-' $(seq 1 $((15 * ${#selected_cols[@]})))
+    echo
 
     while IFS=: read -r -a record; do
         if [[ "$use_where" == "y" ]]; then

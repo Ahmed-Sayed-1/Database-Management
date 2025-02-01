@@ -33,14 +33,8 @@
             . ./Table-functions/selectFromTable.sh
             ;;
         DeleteFromTable)
-            echo "Enter the name of the database"
-            read dbname
-            echo "Enter the name of the table"
-            read tablename
-            echo "Enter the data to delete"
-            read data
-            sed -i "/$data/d" $dbname/$tablename
-            echo "Data deleted successfully"
+            clear
+            . ./Table-functions/deleteFromTable.sh
             ;;
         RetrunToMainMenu)
             clear
