@@ -25,11 +25,7 @@
             show
             ;;
         SelectFromTable)
-            echo "Enter the name of the database"
-            read dbname
-            echo "Enter the name of the table"
-            read tablename
-            cat $dbname/$tablename
+            . ./Table-functions/selectFromTable.sh
             ;;
         DeleteFromTable)
             echo "Enter the name of the database"
