@@ -13,15 +13,13 @@
         ListTables)
             clear
             ls ./DataBase/$dbname
+            clear
             show
             ;;
         DropTable)
-            echo "Enter the name of the database"
-            read dbname
-            echo "Enter the name of the table"
-            read tablename
-            rm $dbname/$tablename
-            echo "Table deleted successfully"
+            clear
+            . ./Table-functions/dropTable.sh
+            show
             ;;
         InsertIntoTable)
             clear
