@@ -19,6 +19,7 @@
 				*)
 					echo "Invalid choice, please select again."
                     dataType
+					break
 					;;
 				esac
 			done
@@ -43,7 +44,6 @@
 			read -p "Please Enter name of Column number $(($i+1)): " colName
 			line+=$colName:
 			dataType
-            echo $colDataType
 			line+=$colDataType:
 			if [[ flag -eq 0 ]]
 			then
@@ -61,7 +61,6 @@
 					flag=1
 				fi
 			fi
-            echo $dbname
             echo $line >> ./DataBase/$dbname/.$TBName-metadata
 		done
 		touch ./DataBase/$dbname/$TBName
