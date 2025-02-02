@@ -61,4 +61,4 @@ function select_records() {
 
 read -p "Please Enter Table Name: " TBName
 select_records "$TBName"
-show
+tableMenu

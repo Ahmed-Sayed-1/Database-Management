@@ -4,8 +4,7 @@ read -p "Please Enter Table Name: " TBName
     
 if [[ ! -f "./DataBase/$dbname/$TBName" ]]; then
         echo "Table does not exist."
-        show
-        exit 0
+        tableMenu
 fi
     
 metadata_file="./DataBase/$dbname/.$TBName-metadata"
@@ -39,7 +38,6 @@ for ((i=0; i<${#columns[@]}; i++)); do
                 done < "./DataBase/$dbname/$TBName"
             fi
         fi
-            
         row+="$value:"
         break
     done

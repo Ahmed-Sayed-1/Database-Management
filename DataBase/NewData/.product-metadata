@@ -1,5 +1,0 @@
-ID:integer:pk
-pName:string:
-avail:boolean
-Expire:integer
-sold:string
