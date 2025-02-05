@@ -13,7 +13,6 @@
         ListTables)
             clear
             ls ./DataBase/$dbname
-            clear
             show
             ;;
         DropTable)
@@ -33,6 +32,10 @@
         DeleteFromTable)
             clear
             . ./Table-functions/deleteFromTable.sh
+            ;;
+        UpdateTable)
+            clear
+            . ./Table-functions/updateTable.sh
             ;;
         RetrunToMainMenu)
             clear
