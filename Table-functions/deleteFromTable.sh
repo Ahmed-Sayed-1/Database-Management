@@ -13,7 +13,15 @@ function delete_records() {
 
     columns=($(awk -F: '{print $1}' "$metadata_file"))
     
-    read -p "Delete all records? (y/n): " delete_all
+    while true; do
+        read -p "Delete all records? (y/n): " delete_all
+
+        if [[ "$delete_all" == "y" || "$delete_all" == "n" ]]; then
+            break  
+        else
+            echo "Invalid input. Please enter 'y' or 'n'."
+        fi
+    done
     
     if [[ "$delete_all" == "y" ]]; then
         > "$data_file"
@@ -44,3 +52,4 @@ function delete_records() {
 
 read -r -p "Please Enter Table Name: " TBName
 delete_records "$TBName"
+tableMenu

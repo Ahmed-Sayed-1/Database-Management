@@ -26,9 +26,9 @@
     }
 
     read -p "Please Enter Table Name: " TBName
-	if [[ -e ./DataBase/$dbname/$TBName ]]
+	if [ -e ./DataBase/$dbname/$TBName ] || [ -z "$dbname" ];
 	then
-		echo "Table is Already Exist"
+		echo "Table is Already Exist or invalid input"
 	else
         while true; do
             read -p "Please Enter Columns numbers: " colNum

@@ -12,15 +12,21 @@ function update_records() {
     fi
 
     columns=($(awk -F: '{print $1}' "$metadata_file"))
+    data_types=($(awk -F: '{print $2}' "$metadata_file"))
     primary_key_index=$(awk -F: '{if ($3 == "pk") print NR-1}' "$metadata_file")
 
-    read -p "Enter ID of record to update: " update_id
+    if [[ -z "$primary_key_index" ]]; then
+        echo "Error: No primary key column found in the table metadata."
+        return 1
+    fi
+
+    read -p "Enter the value of the primary key for the record to update: " update_id
 
     record_found=false
-    > "$temp_file"
+    > "$temp_file" 
 
     while IFS=: read -r -a record; do
-        if [[ "${record[0]}" == "$update_id" ]]; then
+        if [[ "${record[$primary_key_index]}" == "$update_id" ]]; then
             record_found=true
             echo "Current values:"
             for i in "${!columns[@]}"; do
@@ -50,17 +56,37 @@ function update_records() {
                 while true; do
                     read -p "Enter new value for ${columns[$index]}: " value </dev/tty
 
+                    if [[ -z "$value" ]]; then
+                        echo "Empty value is not valid."
+                        continue
+                    fi
+
+                    case "${data_types[$index]}" in
+                        "integer")
+                            if [[ ! "$value" =~ ^-?[0-9]+$ ]]; then
+                                echo "Invalid input. Expected data type: integer."
+                                continue
+                            fi
+                            ;;
+                        "boolean")
+                            if [[ ! "$value" =~ ^(true|false)$ ]]; then
+                                echo "Invalid input. Expected data type: boolean (true/false)."
+                                continue
+                            fi
+                            ;;
+                    esac
+
                     if [[ "$index" -eq "$primary_key_index" ]]; then
                         pk_exists=false
                         while IFS=: read -r -a existing_record; do
-                            if [[ "${existing_record[$index]}" == "$value" ]]; then
+                            if [[ "${existing_record[$primary_key_index]}" == "$value" ]]; then
                                 pk_exists=true
                                 break
                             fi
                         done < "$data_file"
 
                         if $pk_exists; then
-                            echo "Error: Primary key must be unique. The value '$value' already exists."
+                            echo "Primary key must be unique. The value '$value' already exists."
                             continue
                         fi
                     fi
@@ -77,7 +103,7 @@ function update_records() {
     done < "$data_file"
 
     if ! $record_found; then
-        echo "Record with ID $update_id not found."
+        echo "Record with primary key '$update_id' not found."
         rm "$temp_file"
         return 1
     fi
@@ -88,3 +114,4 @@ function update_records() {
 
 read -p "Please Enter Table Name: " TBName
 update_records "$TBName"
+tableMenu

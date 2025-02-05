@@ -29,17 +29,16 @@ DB-menu(){
     DropDatabase)
         clear 
         read -p "Enter the name of the database: " dbname
-        if [ -d DataBase/$dbname ]
-        then
-            rm -rfI DataBase/$dbname
-            if [ -d "DataBase/$dbname" ] 
-            then
+
+        if [ -z "$dbname" ] || [ ! -d "DataBase/$dbname" ]; then
+            echo "Database does not exist."
+        else
+            rm -rfI DataBase/"$dbname"
+            if [ -d "DataBase/$dbname" ]; then
                 echo "Deletion was canceled or failed."
             else
                 echo "Database successfully deleted."
             fi
-        else
-            echo "Database does not exist"
         fi
         DB-menu
         ;;

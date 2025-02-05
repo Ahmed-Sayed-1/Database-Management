@@ -1,7 +1,7 @@
 #! /bin/bash
 
  tableMenu(){
-        select TableChoice in CreateTable ListTables DropTable InsertIntoTable SelectFromTable DeleteFromTable RetrunToMainMenu
+        select TableChoice in CreateTable ListTables DropTable InsertIntoTable SelectFromTable DeleteFromTable UpdateTable RetrunToMainMenu
         do
         case $TableChoice in        
         CreateTable)
@@ -57,11 +57,12 @@
     }
 
     read -p "Enter the name of the database: " dbname
-    if [ -d ./DataBase/$dbname ]
+    
+    if [ -z "$dbname" ] || [ ! -d "DataBase/$dbname" ]; 
     then
+        echo "Database does not exist."
+    else
         clear
         echo "Database connected successfully"
         tableMenu 
-    else
-        echo "Database does not exist"
     fi
