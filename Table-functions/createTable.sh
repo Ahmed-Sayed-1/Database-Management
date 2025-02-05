@@ -24,6 +24,7 @@
 				esac
 			done
     }
+
     read -p "Please Enter Table Name: " TBName
 	if [[ -e ./DataBase/$dbname/$TBName ]]
 	then
@@ -64,4 +65,5 @@
             echo $line >> ./DataBase/$dbname/.$TBName-metadata
 		done
 		touch ./DataBase/$dbname/$TBName
+		echo "table created successfully"
 	fi

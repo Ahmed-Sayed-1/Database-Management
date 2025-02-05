@@ -1,29 +1,35 @@
 #! /bin/bash
 
-
- show(){
-        select TableChoice in CreateTable ListTables DropTable InsertIntoTable SelectFromTable DeleteFromTable UpdateTable RetrunToMainMenu
+ tableMenu(){
+        select TableChoice in CreateTable ListTables DropTable InsertIntoTable SelectFromTable DeleteFromTable RetrunToMainMenu
         do
         case $TableChoice in        
         CreateTable)
             clear
             . ./Table-functions/createTable.sh
-            show
+            tableMenu
             ;;
         ListTables)
             clear
-            ls ./DataBase/$dbname
-            show
+            count=$(ls ./DataBase/$dbname | wc -l)
+            if [[ $count -eq 0 ]]
+            then
+                echo "No table created"
+            else
+                echo "List of tables:"
+                ls ./DataBase/$dbname
+            fi
+            tableMenu
             ;;
         DropTable)
             clear
-            . ./Table-functions/dropTable.sh
-            show
+            . ./Table-functions/dropTable.sh $dbname
+            tableMenu
             ;;
         InsertIntoTable)
             clear
             . Table-functions/./InsertIntoTable.sh
-            show
+            tableMenu
             ;;
         SelectFromTable)
             clear
@@ -41,17 +47,21 @@
             clear
             . ./main.sh
             ;;
+        *)
+            clear
+            echo "Unknown choice"
+            tableMenu
+            ;;
             esac
             done
     }
 
-    
     read -p "Enter the name of the database: " dbname
     if [ -d ./DataBase/$dbname ]
     then
         clear
-       echo "Database selected successfully"
-       show 
+        echo "Database connected successfully"
+        tableMenu 
     else
         echo "Database does not exist"
     fi
